@@ -256,9 +256,7 @@ incrementScore = () => {
 	
 _Note: Never modify state directly (commonly use filter array) _
 
-**#Practice State**
-
-https://teamtreehouse.com/library/introducing-the-practice-38 
+[**#Practice State**](https://teamtreehouse.com/library/introducing-the-practice-38 )
 
 ## B - REACT COMPONENTS
 
@@ -280,33 +278,37 @@ _Q. What's in package.json?_
 - When you create a project with Create React App, it installs the latest version of React and React-DOM, as well as the latest version of react-scripts, a development dependency that manages all other dev dependencies that run, test and build your app.
 
 **Progressive Web App Features**
+
 - Create React App sets up a fully functional, offline-first Progressive Web App by default. However, we removed the PWA related files just for this project to focus on the React components only.
 
-**#Separating function components into Modules
-**
+**#Separating function components into Modules**
 - Each component should be a separated component
 
 **#Separating class components into Modules**
 - break the Counter class out into its own module. We'll also use named import statements to define a class without having to extend from `React.Component`.
 
-**Import React, Component **
+**Import React, Component**
 
 ```jsx
 import React, { Component } from 'react';
 import Header from './Header';
 ```
 
-**Export component **
-- `export default Counter;`
+**Export component**
 
-Another way to export a class
+ ```jsx 
+ export default Counter;
+ ```
+
+*Another way to export a class*
 
 ```jsx
 export default class Counter extends Component {
   render() { ... }
 }
 ```
-Another way to export a function
+*Another way to export a function*
+
 ```jsx
 export const Counter = () => {
   return ( ... );
@@ -571,7 +573,7 @@ class Player extends PureComponent {
   };
 ```
 
-[**#Practice Component Rendering **](https://teamtreehouse.com/library/introducing-the-practice-37)
+[**#Practice Component Rendering**](https://teamtreehouse.com/library/introducing-the-practice-37)
 
 ## C - REACT ROUTER 4 BASICS
 ### 1. Getting Started with React Router

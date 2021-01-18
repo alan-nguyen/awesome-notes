@@ -43,10 +43,12 @@ Table of Contents
     - [4. Building a Search feature](#4-building-a-search-feature)
     - [5. Displaying the Search results](#5-displaying-the-search-results)
   - [H - REACT HOOKS](#h---react-hooks)
+    - [0. Introduction](#0-introduction)
     - [1. Set and Update State with `useState`](#1-set-and-update-state-with-usestate)
     - [2. Perform Side Effects with useEffect](#2-perform-side-effects-with-useeffect)
     - [3. Createa GIF Search App with React Hooks](#3-createa-gif-search-app-with-react-hooks)
     - [4. Use React's Context API with Hooks](#4-use-reacts-context-api-with-hooks)
+    - [5. Next step](#5-next-step)
   - [I - DEPLOYING A REACT APP](#i---deploying-a-react-app)
     - [1. Create a Production Build](#1-create-a-production-build)
     - [2. Deploy to GitHub Pages](#2-deploy-to-github-pages)
@@ -57,6 +59,10 @@ Table of Contents
     - [2. React Authentication](#2-react-authentication)
     - [3. Building Applications with React and Redux](#3-building-applications-with-react-and-redux)
   - [K - Using Create React Native App](#k---using-create-react-native-app)
+  - [L - React authentiation](#l---react-authentiation)
+    - [1. Introducing the Authentication Projet](#1-introducing-the-authentication-projet)
+    - [2. Implementing Basic Authentication](#2-implementing-basic-authentication)
+    - [3. React Router and Authentication](#3-react-router-and-authentication)
 ---
 
 ## A - React Basics
@@ -983,15 +989,337 @@ constructor() {
 ```
 
 ## H - REACT HOOKS
+### 0. Introduction
+**#Class components' cons**
+- Require additional syntax compared to function
+- Slower optimization
+- Interfere with certain React tools and features
+
+**#React Hooks**
+
+React Hooks are special built-in functions that allow you to hook into the power of class components, with a cleaner and more straightforward syntax. 
+- Manage state and rendering of UI when state changes
+- Provide access to your app's context
+- Update components with an alternative to lifecycle methods
 
 ### 1. Set and Update State with `useState`
-  
+
+A Hook is a function that lets you "hook into" React state and lifecycle features from function components. The most useful built-in Hook is `useState()`, which allows you to do what its name implies: use React state in a function component.
+
+**#Set State with `useState`**
+- use Hooks inside functions only (Hooks don't work inside classes)
+-  `useState()` is the equivalent of both `this.state` and `this.setState` for function components.
+
+```jsx
+import React, { useState } from 'react';
+
+function App() {
+  const [ score, setScore ] = useState(0); // [0, ƒ]
+
+  ...
+}
+```
+- `useState()` accepts one optional argument – the initial value of the state variable.
+- Calling `useState()` with the initial state returns an array with two values:
+  -  a variable with the current state value
+  -  a function to update that value
+- In class components, the state always has to be an object. With `useState()` state can be an object, array, or another JavaScript primitive like a string or integer.
+
+**#Update State**
+- The first time you call useState(), it sets the initial component state
+- To update the `score` state of the example App function component, call `setScore()` and pass it the new state
+
+```jsx
+function App() {
+  const [score, setScore] = useState(0);
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>{ score }</h1>
+        <button onClick={() => setScore(score + 1)}> // update the score state
+          Increase score
+        </button>
+      </header>
+    </div>
+  );
+}
+```
+**#Declare multiple states**
+- useState() lets you declare one state variable at a time, but you aren’t limited to just one useState() call inside a component. You can call useState() numerous times to declare multiple state variables 
+
+```jsx
+import React, { useState } from 'react';
+
+function App() {
+  const [ score, setScore ] = useState(0);
+  const [ message, setMessage ] = useState('Welcome!');
+}
+```
+
+**#Update State Based on Previous State**
+- If you need to update state using the previous state value, you can pass a function to the method updating state.
+
+```jsx
+return (
+  <div className="App">
+    <header className="App-header">
+      <h1>{ message }</h1>
+      <h2>{ score }</h2>
+      <button onClick={() => setScore(prevScore => prevScore + 1)}>
+        Increase score
+      </button>
+    </header>
+  </div>
+);
+```
+
 ### 2. Perform Side Effects with useEffect
-  
-  
+You've learned that there are different phases in a React component's lifecycle: mounting, updating, and unmounting. React provides lifecycle methods to run code at these specific moments. They are used to re-render a component, update the DOM when data changes, fetch data from an API or perform any necessary cleanup when removing a component. Developers refer to these types of actions as "side effects" because you *cannot perform them during rendering* (additional code runs after React updates the DOM).
+
+- Common lifecycle methods React uses to handle side effects in class components are `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`.
+- Forgetting to include one of these methods when needed, can leave us with stale data or memory leaks.
+
+**#Perform Side Effects in Function Components**
+- `useEffect` Hook let you perform side effects in function components, and give them access to common lifecycle hooks.
+
+> If you’re familiar with React class lifecycle methods, you can think of `useEffect` Hook as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` combined.
+
+- `useEffect` receives a callback function as the first argument, which is where you perform any side effects
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function App() {
+  const [score, setScore] = useState(0);
+  const [message] = useState('Welcome!');
+
+  // The effect happens after render
+  useEffect(() => {
+    console.log('useEffect called!');   
+  });
+
+  return (...);
+}
+```
+- The `useEffect` Hook instructs React to do *something* after render, so it's called when the component first renders and after each subsequent re-render or update.
+
+**#Prevent useEffect from Causing Unnecessary Renders**
+- The `useEffect` Hook takes an optional array as a second argument that instructs React to skip applying an effect (and re-rendering) if specific values haven’t changed between re-renders.
+- In the array, you list any dependencies for the effect (states). The array instructs the `useEffect` Hook to run only if one of its dependencies changes.
+- Passing an *empty array* as the second argument will run `useEffect` only once after the initial render.
+```jsx
+function App() {
+  const [score, setScore] = useState(0);
+  const [message] = useState('Welcome!');
+
+  useEffect(() => {
+    console.log('useEffect called!');   
+  }, []); // pass an empty array to run useEffect once
+
+  return (...);
+}
+```
+**#Access State Inside useEffect**
+- You're able to access a state variable (even update state) from inside useEffect
+```jsx
+function App() {
+  const [score, setScore] = useState(0);
+  const [message] = useState('Welcome!');
+
+  useEffect(() => {
+    document.title = `${message}. Your score is ${score}`;
+  }, [message, score]);
+
+  return (...);
+}
+```
+Notice how `useEffect` uses the `score` and `message` variables. This means that the variables are now dependencies that <mark>need to be listed inside the array</mark>. If you do not list score, for example, the title will not display the updated score. 
+
+**#Data Fetching with useEffect**
+- You'll most likely use the `useEffect` Hook to fetch data from an API, similar to how you'd use the `componentDidMount` method in a class.
+
+```jsx
+function App() {
+  const [data, setData] = useState('');
+
+  useEffect(() => {
+    console.log('useEffect called!');
+    fetch('https://dog.ceo/api/breeds/image/random')
+      .then(res => res.json())
+      .then(data => setData(data.message))
+      .catch(err => console.log('Oh noes!', err))
+  }, []);
+
+  return (
+    <div className="App">
+      <img src={data} alt="A random dog breed" />
+    </div>
+  );
+}
+```
+**#"Clean Up" useEffect**
+- Some side effects in React require "cleanup," or running additional code when a component unmounts (to prevent a memory leak, for example). With classes, you'd use the `componentWillUnmount()` lifecycle method to perform any necessary cleanup.
+
+- With Hooks, you don't need a separate function to perform cleanup. *Returning a function from your effect takes care of the cleanup*, running the function when the component unmounts. 
+
 ### 3. Createa GIF Search App with React Hooks
 
+**#App Component**
+```jsx
+function App() {
+  const [data, setData] = useState([]);
+  const [query, setQuery] = useState('cats');
+  const [isLoading, setIsLoading] = useState(true);
+
+  // update the query state
+  const performSearch = (value) => setQuery(value);
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.giphy.com/v1/gifs/search?q=${query}&limit=24&api_key=BG0uinTSDtfym4Q3P2REbOkh7wHDqQz3`
+      )
+      .then((response) => setData(response.data.data))
+      .catch((error) => console.log('Error fetching and parsing data', error))
+      .finally(() => setIsLoading(false));
+  }, [query]); // isLoading and data are being updated within the hook (setState), no need to pass them to the dependency array
+
+  return (
+    <div>
+      <div className="main-header">
+        <div className="inner">
+          <h1 className="main-title">GifSearch</h1>
+          <SearchForm onSearch={performSearch} />
+        </div>
+      </div>
+      <div className="main-content">
+        {isLoading ? <p>Loading...</p> : <GifList data={data} />}
+      </div>
+    </div>
+  );
+}
+```
+
+**#SearchForm Component**
+
+```jsx
+function SearchForm(props) {
+  const [searchText, setSearchText] = useState('');
+
+  const onSearchChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.onSearch(searchText);
+    e.currentTarget.reset();
+  };
+
+  return (
+    <form className="search-form" onSubmit={handleSubmit}>
+      <label className="is-hidden" htmlFor="search">
+        Search
+      </label>
+      <input
+        type="search"
+        onChange={onSearchChange}
+        name="search"
+        placeholder="Search..."
+      />
+      <button type="submit" id="submit" className="search-button">
+        <i className="material-icons icn-search">search</i>
+      </button>
+    </form>
+  );
+}
+```
+
 ### 4. Use React's Context API with Hooks
+- React's Context API provides a way to pass data to components without having to pass props manually at every single level (also known as prop-drilling).
+- use Context when certain data needs to be accessible to several components at different nesting levels.
+- The `useContext` Hook provides the functionality of the Context API in a single function. Once you've created your app's Context, call `useContext()` inside a function component to access any Context state and actions.
+
+**#Create Context**
+```jsx
+import React, { useState } from 'react';
+
+export const ScoreboardContext = React.createContext()
+
+export const Provider = (props) => {
+  const [players, setPlayers] = useState([]);
+
+return (
+    <ScoreboardContext.Provider value={{ 
+      players,
+      actions: {
+        changeScore: handleScoreChange,
+      }
+    }}>
+      { props.children }
+    </ScoreboardContext.Provider>
+  );
+};
+```
+**#useRef**
+```jsx
+import React, { useContext, useRef } from 'react';
+import { ScoreboardContext } from './Context';
+
+const AddPlayerForm = () => {
+  const { actions } = useContext(ScoreboardContext);
+  const playerInput = useRef();  
+
+  return (
+    <form onSubmit={handleSubmit} >
+      <input 
+        type="text"
+        ref={playerInput}
+      />            
+    </form>
+  );
+}
+```
+**#Access Context with `useContext` - Acess State & actions**
+```jsx
+import React, { useContext } from 'react';
+import { ScoreboardContext } from './Context';
+import Counter from './Counter';
+
+const Player = ({ index }) => {
+    const { players, actions } = useContext(ScoreboardContext);
+    return ( 
+      <div className="player">
+        <span className="player-name">
+          <button 
+            className="remove-player" 
+            onClick={() => actions.removePlayer(players[index].id)}>✖
+          </button>
+          { players[index].name }
+        </span>
+        <Counter index={index} />
+      </div>
+    );
+};
+```
+
+### 5. Next step
+#[Additional Hooks](https://reactjs.org/docs/hooks-reference.html#additional-hooks)
+- `useReducer` can help when dealing with complex state logic or when the next state depends on the previous state.
+- `useRef` provides an easier way to access DOM nodes or React elements created in the render method with a ref attribute.
+- `useHistory` Hook is imported from React Router Dom and provides access to the history object.
+
+**#Custom Hooks**
+With custom Hooks, you can reuse logic easily, share information across components and write less code. Like built-in Hooks, custom Hooks are JavaScript functions whose names start with `use`
+
+**#Rules of Hooks**
+There are two main rules you should follow when using Hooks:
+
+- Call Hooks only at the top level of your React function. For example, don't call Hooks inside loops, conditions, or nested functions.
+- Call Hooks from React function components only. Hooks do not work inside class components.
+
+React provides a handy ESLint plugin called eslint-plugin-react-hooks to help enforce these rules.
 
 ## I - DEPLOYING A REACT APP 
 
@@ -1017,7 +1345,8 @@ Learn how to deploy and host a React app on GitHub Pages, a free hosting solutio
 **#Step 3. Setup scripts in package.json**
 	
 ```json
-"predeploy": "npm run build",
+"predeploy": "npm runj jj
+ build",
    "deploy": "gh-pages -d build",
 ```
 
@@ -1098,3 +1427,33 @@ Redux is a state management framework that provides a robust infrastructure that
 
 ## K - Using Create React Native App
 https://teamtreehouse.com/library/introducing-create-react-native-app
+
+## L - React authentiation
+### 1. Introducing the Authentication Projet
+**#What is Basic Authentication?**
+
+
+**#Set up the React App**
+
+**#Run the Express Server**
+
+### 2. Implementing Basic Authentication
+**#Set up User Registration**
+
+**#Implement the Sign up Form**
+
+**#Set up Basic Authentication**
+
+**#Implement Sign In**
+
+**#Display Authenticated User in the Header**
+
+### 3. React Router and Authentication 
+
+**#Protect Routes that Require Authentication**
+
+**#Implement User Sign Out**
+
+**#Refine and Complete Authentication**
+
+**#Preserve the User State with Cookies**

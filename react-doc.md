@@ -1,4 +1,4 @@
-#React Docs Summary
+# React Docs Summary
 > By: Alan Nguyen
 
 ## A - INSTALLATION
@@ -11,6 +11,7 @@
 ## B - MAIN CONCEPTS
 ### 1. Hello World
 ### 2. Intro JSX
+
 ### 3. Rendering Elements
 ### 4. Components and Props
 ### 5. State and Lifecycle

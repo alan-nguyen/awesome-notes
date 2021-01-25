@@ -637,7 +637,27 @@ console.log(stringObject[toStringSymbol]());
 
 ### 8. Bugs and Errors
 
+**#Exceptions**
+- Exception handling - when a function cannot proceed normally, what we would like to do is just stop what we are doing and immediately jump to a place that knows how to handle the problem
+- unwinding the stack - raising one somewhat resembles a super-charged return from a function: it jumps out of not just the current function but also its callers, all the way down to the first call that started the current execution.
+- `throw` keyword is used to raise an exception. 
 
+```js
+throw new Error("Invalid direction: " + result);
+```
+
+- When the code in the `try` block causes an exception to be raised, the `catch` block is evaluated, with the name in parentheses bound to the exception value. 
+- 
+
+```js
+try {
+  console.log("You see", look());
+} catch (error) {
+  console.log("Something went wrong: " + error);
+}
+```
+- Big advantage of exceptions: error-handling code is necessary only at the point where the error occurs and at the point where it is handled.
+- 
 ### 9. Regular Expressions
 
 ### 10. Modules

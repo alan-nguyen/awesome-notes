@@ -91,7 +91,65 @@ If you organize the text into columns, the user’s eyes will likely not travel 
 
 [Google Font Pairings](https://www.reliablepsd.com/ultimate-google-font-pairings/)
 
-### h. Links & Buttons 
+### h. Links & Buttons
+- Showing interactivity and clickability through signifiers
+
+- Browser link styles
+  - clicked (but not yet followed) links appear with red text,
+  - previously visited links are styled with purple text.
+
+**#Tooltips and titles**
+
+```html
+<p>
+  <a href="https://www.codecademy.com" title="Codecademy is an online learning platform">Codecademy</a> is the best place to learn to code!
+</p>
+```
+
+**#Link States**
+Links have four main states: 
+- normal (not clicked) - :link
+- hover - :hover
+- active (clicked) - :active
+- visited - :visited. 
+
+**#Skeuomorphism and Flat Design**
+- If users can draw a metaphor between a familiar real-life object and an interface element, they are more likely to know how to use it without training. 
+- Flat design uses simplicity and lack of clutter for its UI elements.
+
+**#Buttons: Hover states**
+- Users expect buttons to be clickable. Since buttons can consist of any number of total elements (rectangular/circular body, text, image(s)), all elements should be clickable
+
+**#Affordances**
+- Objects afford the ability of users to interact with them in various ways.
+- Potentials for interaction are collectively called the affordances of an object.
+
+**#Signifiers**
+- Signifiers are aspects of an object that a designer uses to indicate potential and intended affordances of an object.
+- The cup's handle is an example of a common user experience pattern. 
+
+**#UX Patterns**
+- User experience (UX) patterns establish reusable solutions to common problems. 
+
+**#Affordances and Signifiers in Web Design**
+
+One common example of visual feedback is the cursor image itself
+- a pointing hand indicating that an interaction will occur
+- an i-beam shape indicating that text can be selected
+- a four-directional arrow showing that an element can be moved
+- and many more cursor styles and interactions.
+
+A ubiquitous example is the styling of hyperlinks
+
+Further Reading
+- [Signifiers, not affordances](https://www.jnd.org/dn.mss/signifiers_not_affordances.html) by Don Norman
+- UIpatterns.com
+
+**Quiz**
+
+What is the proper cascade order for pseudo-classes so that they show all link states accurately?
+- :link, :visited, :hover, :active
+
 ### i. Secondary Navigation
 ### j. Build a Website Design System
 ### k. Improved Styling with CSS

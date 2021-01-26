@@ -415,6 +415,77 @@ In general, the rule of not adding anything extraneous to the design
 
 ## 9. CSS Transitions and Animation
 ### a. Transitions and Tranforms
+**#CSS Transitions**
+
+CSS transitions allow us to control the timing of visual state changes. We can control the following four aspects of an element’s transition:
+- Which CSS properties transition
+- How long a transition lasts
+- How much time there is before a transition begins
+- How a transition accelerates
+
+**#Duration**
+
+To create a simple transition in CSS, we must specify two of the four aspects:
+
+    The property that we want to transition.
+    The duration of the transition.
+
+```css
+a {
+  transition-property: color;
+  transition-duration: 1s;
+}
+```
+Resource - [all animated properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties)
+
+**#Delay**
+
+Much like duration, `transition-delay`'s value is an amount of time. Delay specifies the time to wait before starting the transition.
+```css
+transition-property: width;
+transition-duration: 750ms;
+transition-delay: 250ms;
+```
+**#Timing Function**
+
+`transition-timing-function` describes the pace of the transition.
+
+The default value is `ease`, which starts the transition slowly, speeds up in the middle, and slows down again at the end.
+
+Other valid values include:
+- `ease-in` — starts slow, accelerates quickly, stops abruptly
+- `ease-out` — begins abruptly, slows down, and ends slowly
+- `ease-in-out` — starts slow, gets fast in the middle, and ends slowly
+- `linear` — constant speed throughout
+
+**#Shorthand**
+
+```css
+/* property duration timing-function delay */
+transition: color 1.5s linear 0.5s;
+```
+- Leaving out one of the properties causes the default value for that property to be applied. 
+- There is one exception: You must set duration if you want to define delay. Since both are time values, the browser will always interpret the first time value it sees as duration.
+
+**#Combination**
+- can describe unique transitions for multiple properties, and combine them.
+```css
+.button span,
+.button div,
+.button i {
+ transition: width 750ms ease-in 200ms, left 500ms ease-out 450ms, font-size 950ms linear;
+}
+```
+
+**#All**
+- It is common to use the same duration, timing function, and delay for multiple properties.`transition-property` value to `all` will apply the same values to all properties. 
+- `all` means every value that changes will be transitioned in the same way. You can use all with the separate transition properties, or the shorthand syntax. 
+
+```css
+transition: all 1.5s linear 0.5s;
+```
+Resource - [MDN - Using CSS transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)
+
 ### b. Animations
 
 ## 10. Command Line - Git - Github

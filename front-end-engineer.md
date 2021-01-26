@@ -237,57 +237,164 @@ There are three major types of breadcrumbs:
 In general, the rule of not adding anything extraneous to the design
 
 ### j. Build a Website Design System
-### k. Improved Styling with CSS
 
 ## 4. Making a Website Responsive
+### a. Responsive design
+### b. Layout with Flexbox
+### c. Grids & Spacing
+### d. Grid
+### e. Wireframing
+### f. Company Home Page
+### g. Responsive Club Website
 
 ## 5. JavaScript Syntax - Part 1
+### a. JS in Web Development
+### b. Running JS
+### c. Syntax: Intro
+### d. Syntax: Conditionals
+### e. Syntax: Functions
+### f. Syntax: Scope
+### g. Number Guesser
 
 ## 6. JavaScript Syntax - Part 2
+### a. Syntax: Arrays
+### b. Syntax: Loops
+### c. Syntax: Objects
+### d. Syntax: Iterators
+### e. Syntax: Errors and Debugging
+### f. Syntax: Credit Card Checker
+### g. Mysterious Organism
 
 ## 7. Building Interactive Websites
+### a. JS interactive website
+### b. JS and the DOM
+### c. DOM Events with JS
+### d. HTML Forms
 
 ## 8. Making a Website Accessible
 
 ## 9. CSS Transitions and Animation
+### a. Transitions and Tranforms
+### b. Animations
 
 ## 10. Command Line - Git - Github
+
+### a. Web Hostings
+### b. Command line for building websites
+### c. Intro to Git
+### d. Intro to GitHub
+### e. Markdown
 
 ## 11. HTML-CSS-JS Portfolio Project
 
 ## 12. JavaScript Syntax - Part 3
+### a. Syntax: Classes
+### b. Syntax: Modules
+### c. Syntax: Error Handling
+### d. Practice Classes
+### e. Find Your Hat
 
 ## 13. TDD Fundamentals
+### a. Why Test?
+### b. Write Good Tests with Mocha
+### c. Learn TDD with Mocha
 
 ## 14. Async JavaScript and HTTP Requests
+### a. Basics of Asynchronous JS
+### b. Syntax: Promises
+### c. Syntax: Async-Await
+### d. APIs and HTTP Requests
+### e. JS: Requests
+### f. Securing your applications
 
 ## 15. Web Apps
 
 ## 16. React - Part 1
+### a. Review ES6 Syntax
+### b. Review Functional JS
+### c. Intro to React.js
+### d. The Virtual DOM
+### e. JSX
+### f. React Components
 
 ## 17. React - Part 2 
+### a. Components and Props
+### b. React State
+### c. React Development Tools
+### d. Stateless Components from Statefull Components
+### e. Lifecycle Methods
+### f. Jammming
+### g. Deploying React Apps with Netlify
+### h. Function Components and Hooks
+### i. Advanced React
+### j. React Testing with Jest
 
 ## 18. Redux
+### a. Why Redux?
+### b. Intro to Redux
+### c. Advanced Redux
+### d. Testing Redux
 
 ## 19. Advanced Concepts in TDD
+### a. Advanced Testing: Mocking
+### b. Advanced Testing: Browser Automation
 
 ## 20. React & Redux Porfolio Project
 
 ## 21. Advanced Web Development 
+### a. Styling Applications
+### b. SEO
+### c. Build Tools
+### d. Optimizing Application
+### e. Adding Realtime Connectivity
 
 ## 22. Linear Data Structures
+### a. Intro to Data Structures
+### b. Nodes
+### c. Singly Linked Lists
+### d. Doubly Linked Lists
+### e. Queues
+### f. Stacks
 
 ## 23. Complex Data Structures
+### a. Hash Maps
+### b. Trees
+### c. Heaps
+### d. Graphs
 
 ## 24. Algorithms
+### a. Recursion
+### b. Asymptotic Notation
+### c. Bubble Sort
+### d. Merge Sort
+### e. Quicksort
 
 ## 25. Search & Graph Search Algorithms
+### a. Binary Search & Search Trees
+### b. Graph Traversals
 
 ## 26. Intervew Skills
+### a. Whiteboarding
+### b. JS algorithms Practice
+### c. Soft skills
+### d. Real World Interview Problems
 
 ## 27. Final Front-end Portfolio Project
 
 ## 28. Next Steps in Your Front-end engineer jouney
+### Mobile Applications
+
+If you’d like to build apps for iOS or Android, try [React Native](https://reactnative.dev/). It uses the same component hierarchy as React, which you already know!
+### TypeScript
+
+JavaScript is powerful and available on every browser, but it lacks one major feature: types. [TypeScript](https://www.codecademy.com/learn/learn-typescript) is an extension of JavaScript that adds types, which can save you time catching errors and provide fixes before you run code.
+
+### Static Site Generators
+
+If you want to use React for a large-scale application, try [Gatsby](https://www.gatsbyjs.com/), an ecosystem of tools that optimizes everything around your application, making it faster, safer, scalable, and accessible.
+
+### GraphQL
+If you plan on using or building APIs, look into [GraphQL](https://graphql.org/), a query language that makes it easier to work with APIs.
 
 
 

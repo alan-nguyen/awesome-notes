@@ -151,6 +151,91 @@ What is the proper cascade order for pseudo-classes so that they show all link s
 - :link, :visited, :hover, :active
 
 ### i. Secondary Navigation
+**#Intro**
+- The primary navigation system typically contains the most important links and buttons that need to be displayed on every single page of the site.
+- Secondary(breadcrumbs) navigation consists of a clickable list of pages or attributes that led to the current page.
+
+Benefit of using breadcrumbs
+- gives an idea of where they're on the website
+- hints at the extent of the site.
+- provides a way for a user to quickly jump backward in their navigation of the site
+
+**#Breadcumb styles**
+
+```html
+<ul class="breadcrumb">
+  <li><a href="">Asia</a></li>
+  <li><a href="">Singapore</a></li>
+  <li><a href="">Tourism</a></li>
+  <li><a href="">Hotels</a></li>
+</ul>
+```
+
+```css
+.breadcrumb {
+  text-align: left;
+}
+.breadcrumb li {
+  float: left;
+}
+
+.breadcrumb a {
+  color: #fff;
+  background: darkcyan;
+  text-decoration: none;
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  margin-right: 15px;
+  padding: 0 5px;
+}
+
+.breadcrumb a::before,
+.breadcrumb a::after {
+  content: "";
+  position: absolute;
+  border-color: darkcyan;
+  border-style: solid;
+  border-width: 15px 5px;
+}
+
+.breadcrumb a::before {
+  left: -10px;
+  border-left-color: transparent;
+}
+.breadcrumb a::after {
+  left: 100%;
+}
+
+.breadcrumb a::after {
+  left: 100%;
+  border-color: transparent;
+  border-left-color: darkcyan;
+}
+
+.breadcrumb a:hover {
+  background-color: blue;
+}
+.breadcrumb a:hover::before {
+  border-color: blue;
+  border-left-color: transparent;
+}
+.breadcrumb a:hover::after {
+  border-left-color: blue;
+}
+
+```
+
+**#Breadcrumb Types**
+
+There are three major types of breadcrumbs:
+- Location
+- Attribute
+- Path
+
+In general, the rule of not adding anything extraneous to the design
+
 ### j. Build a Website Design System
 ### k. Improved Styling with CSS
 

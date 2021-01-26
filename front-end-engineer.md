@@ -1,6 +1,146 @@
 # Front-end Engineer
 By: Alan Nguyen
 
+Table of Contents
+- [Front-end Engineer](#front-end-engineer)
+  - [1. Introduction](#1-introduction)
+  - [2. Web Development Fundamentals](#2-web-development-fundamentals)
+  - [3. Improved Styling with CSS](#3-improved-styling-with-css)
+    - [a. Intro](#a-intro)
+    - [b. CSS: The Box Model](#b-css-the-box-model)
+    - [c. CSS: Display and Positioning](#c-css-display-and-positioning)
+    - [d. CSS: Documentation & Debugging](#d-css-documentation--debugging)
+    - [e. Color Theory](#e-color-theory)
+    - [f. Color for UI](#f-color-for-ui)
+    - [g. Text Design](#g-text-design)
+    - [h. Links & Buttons](#h-links--buttons)
+    - [i. Secondary Navigation](#i-secondary-navigation)
+    - [j. Build a Website Design System](#j-build-a-website-design-system)
+  - [4. Making a Website Responsive](#4-making-a-website-responsive)
+    - [a. Responsive design](#a-responsive-design)
+    - [b. Layout with Flexbox](#b-layout-with-flexbox)
+    - [c. Grids & Spacing](#c-grids--spacing)
+    - [d. Grid](#d-grid)
+    - [e. Wireframing](#e-wireframing)
+    - [f. Company Home Page](#f-company-home-page)
+    - [g. Responsive Club Website](#g-responsive-club-website)
+  - [5. JavaScript Syntax - Part 1](#5-javascript-syntax---part-1)
+    - [a. JS in Web Development](#a-js-in-web-development)
+    - [b. Running JS](#b-running-js)
+    - [c. Syntax: Intro](#c-syntax-intro)
+    - [d. Syntax: Conditionals](#d-syntax-conditionals)
+    - [e. Syntax: Functions](#e-syntax-functions)
+    - [f. Syntax: Scope](#f-syntax-scope)
+    - [g. Number Guesser](#g-number-guesser)
+  - [6. JavaScript Syntax - Part 2](#6-javascript-syntax---part-2)
+    - [a. Syntax: Arrays](#a-syntax-arrays)
+    - [b. Syntax: Loops](#b-syntax-loops)
+    - [c. Syntax: Objects](#c-syntax-objects)
+    - [d. Syntax: Iterators](#d-syntax-iterators)
+    - [e. Syntax: Errors and Debugging](#e-syntax-errors-and-debugging)
+    - [f. Syntax: Credit Card Checker](#f-syntax-credit-card-checker)
+    - [g. Mysterious Organism](#g-mysterious-organism)
+  - [7. Building Interactive Websites](#7-building-interactive-websites)
+    - [a. JS interactive website](#a-js-interactive-website)
+    - [b. JS and the DOM](#b-js-and-the-dom)
+    - [c. DOM Events with JS](#c-dom-events-with-js)
+    - [d. HTML Forms](#d-html-forms)
+  - [8. Making a Website Accessible](#8-making-a-website-accessible)
+  - [9. CSS Transitions and Animation](#9-css-transitions-and-animation)
+    - [a. Transitions and Tranforms](#a-transitions-and-tranforms)
+    - [b. Animations](#b-animations)
+  - [10. Command Line - Git - Github](#10-command-line---git---github)
+    - [a. Web Hostings](#a-web-hostings)
+    - [b. Command line for building websites](#b-command-line-for-building-websites)
+    - [c. Intro to Git](#c-intro-to-git)
+    - [d. Intro to GitHub](#d-intro-to-github)
+    - [e. Markdown](#e-markdown)
+  - [11. HTML-CSS-JS Portfolio Project](#11-html-css-js-portfolio-project)
+  - [12. JavaScript Syntax - Part 3](#12-javascript-syntax---part-3)
+    - [a. Syntax: Classes](#a-syntax-classes)
+    - [b. Syntax: Modules](#b-syntax-modules)
+    - [c. Syntax: Error Handling](#c-syntax-error-handling)
+    - [d. Practice Classes](#d-practice-classes)
+    - [e. Find Your Hat](#e-find-your-hat)
+  - [13. TDD Fundamentals](#13-tdd-fundamentals)
+    - [a. Why Test?](#a-why-test)
+    - [b. Write Good Tests with Mocha](#b-write-good-tests-with-mocha)
+    - [c. Learn TDD with Mocha](#c-learn-tdd-with-mocha)
+  - [14. Async JavaScript and HTTP Requests](#14-async-javascript-and-http-requests)
+    - [a. Basics of Asynchronous JS](#a-basics-of-asynchronous-js)
+    - [b. Syntax: Promises](#b-syntax-promises)
+    - [c. Syntax: Async-Await](#c-syntax-async-await)
+    - [d. APIs and HTTP Requests](#d-apis-and-http-requests)
+    - [e. JS: Requests](#e-js-requests)
+    - [f. Securing your applications](#f-securing-your-applications)
+  - [15. Web Apps](#15-web-apps)
+  - [16. React - Part 1](#16-react---part-1)
+    - [a. Review ES6 Syntax](#a-review-es6-syntax)
+    - [b. Review Functional JS](#b-review-functional-js)
+    - [c. Intro to React.js](#c-intro-to-reactjs)
+    - [d. The Virtual DOM](#d-the-virtual-dom)
+    - [e. JSX](#e-jsx)
+    - [f. React Components](#f-react-components)
+  - [17. React - Part 2](#17-react---part-2)
+    - [a. Components and Props](#a-components-and-props)
+    - [b. React State](#b-react-state)
+    - [c. React Development Tools](#c-react-development-tools)
+    - [d. Stateless Components from Statefull Components](#d-stateless-components-from-statefull-components)
+    - [e. Lifecycle Methods](#e-lifecycle-methods)
+    - [f. Jammming](#f-jammming)
+    - [g. Deploying React Apps with Netlify](#g-deploying-react-apps-with-netlify)
+    - [h. Function Components and Hooks](#h-function-components-and-hooks)
+    - [i. Advanced React](#i-advanced-react)
+    - [j. React Testing with Jest](#j-react-testing-with-jest)
+  - [18. Redux](#18-redux)
+    - [a. Why Redux?](#a-why-redux)
+    - [b. Intro to Redux](#b-intro-to-redux)
+    - [c. Advanced Redux](#c-advanced-redux)
+    - [d. Testing Redux](#d-testing-redux)
+  - [19. Advanced Concepts in TDD](#19-advanced-concepts-in-tdd)
+    - [a. Advanced Testing: Mocking](#a-advanced-testing-mocking)
+    - [b. Advanced Testing: Browser Automation](#b-advanced-testing-browser-automation)
+  - [20. React & Redux Porfolio Project](#20-react--redux-porfolio-project)
+  - [21. Advanced Web Development](#21-advanced-web-development)
+    - [a. Styling Applications](#a-styling-applications)
+    - [b. SEO](#b-seo)
+    - [c. Build Tools](#c-build-tools)
+    - [d. Optimizing Application](#d-optimizing-application)
+    - [e. Adding Realtime Connectivity](#e-adding-realtime-connectivity)
+  - [22. Linear Data Structures](#22-linear-data-structures)
+    - [a. Intro to Data Structures](#a-intro-to-data-structures)
+    - [b. Nodes](#b-nodes)
+    - [c. Singly Linked Lists](#c-singly-linked-lists)
+    - [d. Doubly Linked Lists](#d-doubly-linked-lists)
+    - [e. Queues](#e-queues)
+    - [f. Stacks](#f-stacks)
+  - [23. Complex Data Structures](#23-complex-data-structures)
+    - [a. Hash Maps](#a-hash-maps)
+    - [b. Trees](#b-trees)
+    - [c. Heaps](#c-heaps)
+    - [d. Graphs](#d-graphs)
+  - [24. Algorithms](#24-algorithms)
+    - [a. Recursion](#a-recursion)
+    - [b. Asymptotic Notation](#b-asymptotic-notation)
+    - [c. Bubble Sort](#c-bubble-sort)
+    - [d. Merge Sort](#d-merge-sort)
+    - [e. Quicksort](#e-quicksort)
+  - [25. Search & Graph Search Algorithms](#25-search--graph-search-algorithms)
+    - [a. Binary Search & Search Trees](#a-binary-search--search-trees)
+    - [b. Graph Traversals](#b-graph-traversals)
+  - [26. Intervew Skills](#26-intervew-skills)
+    - [a. Whiteboarding](#a-whiteboarding)
+    - [b. JS algorithms Practice](#b-js-algorithms-practice)
+    - [c. Soft skills](#c-soft-skills)
+    - [d. Real World Interview Problems](#d-real-world-interview-problems)
+  - [27. Final Front-end Portfolio Project](#27-final-front-end-portfolio-project)
+    - [Overview](#overview)
+  - [28. Next Steps in Your Front-end engineer jouney](#28-next-steps-in-your-front-end-engineer-jouney)
+    - [Mobile Applications](#mobile-applications)
+    - [TypeScript](#typescript)
+    - [Static Site Generators](#static-site-generators)
+    - [GraphQL](#graphql)
+
 ## 1. Introduction
 
 ## 2. Web Development Fundamentals
@@ -380,6 +520,49 @@ In general, the rule of not adding anything extraneous to the design
 ### d. Real World Interview Problems
 
 ## 27. Final Front-end Portfolio Project
+### Overview
+For this project, you will build an application using everything you’ve learned. Unlike the previous projects, what you build is up to you. We will provide some ideas to get started but we want this project to be something that you are passionate about building.
+
+Think about:
+- An application that you wish exists but doesn’t
+- What you can build to solve a problem that you, your family, or your friends have
+
+Here are some starting ideas to inspire you:
+- A movie finder application the [Movie Database API](https://www.themoviedb.org/)
+- A productivity app like [Todoist](https://todoist.com/)
+- A Pokedex using the [Pokemon API](https://pokeapi.co/)
+- A Gif browser using the [Giphy API](https://developers.giphy.com/)
+
+These ideas require you to learn a few additional technologies on your own:
+- A single/multiplayer game using [Canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) or [Phaser](https://phaser.io/)
+- A mobile application using React Native
+- A data visualization using D3.js
+- A virtual reality application using React 360
+- An interactive 3D visualization using Three.js
+
+Project Requirements:
+- Build the application using React and Redux
+- Version control your application with Git and host the repository on GitHub
+- Use a project management tool (GitHub Projects, Trello, etc.) to plan your work
+- Write a README (using Markdown) that documents your project including:
+  - Wireframes
+  - Technologies used
+  - Features
+  - Future work
+- Write unit tests for your components
+- Write end-to-end tests for your application
+- Users can use the application on any device (desktop to mobile)
+- Users can use the application on any modern browser
+- Users can access your application at a URL
+  - This means your application should be hosted online
+- Users are delighted with a cohesive design system
+- Users are delighted with animations and transitions
+- Users are able to leave an error states
+  - Think about bad API calls, network failures. When an event like that happens, your app shouldn’t crash but provide a user a means to get back to a working state (retry button, go back button, etc.)
+- Get 90+ scores on [Lighthouse](https://web.dev/measure/)
+- OPTIONAL: Get a custom domain name and use it for your application
+- OPTIONAL: Set up a CI/CD workflow to automatically deploy your application when the master branch in the repository changes
+- OPTIONAL: Make your application a progressive web app
 
 ## 28. Next Steps in Your Front-end engineer jouney
 ### Mobile Applications

@@ -484,9 +484,24 @@ transition: color 1.5s linear 0.5s;
 ```css
 transition: all 1.5s linear 0.5s;
 ```
-Resource - [MDN - Using CSS transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)
+Resources
+- [MDN - Using CSS transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)
+- [CSS transitions and transforms for beginners](https://thoughtbot.com/blog/transitions-and-transforms)
+- [MDN - Using CSS transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transforms/Using_CSS_transforms)
+
 
 ### b. Animations
+- https://thoughtbot.com/blog/css-animation-for-beginners
+- https://css-tricks.com/the-facebook-loading-animation-in-css/
+- [MDN - Using CSS animations](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations)
+
+**#Additional resources:**
+- Article: [Web Animation at Work, Rachel Nabors](https://alistapart.com/article/web-animation-at-work/)
+- Article: [Scaling Responsive Animations, Zach Saucier](https://css-tricks.com/scaling-responsive-animations/)
+- keyframes.app
+- animista.net
+- cubic-bezier.com
+- easings.net
 
 ## 10. Command Line - Git - Github
 

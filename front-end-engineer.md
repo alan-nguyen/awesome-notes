@@ -532,6 +532,137 @@ Resources
 ### d. APIs and HTTP Requests
 ### e. JS: Requests
 ### f. Securing your applications
+- [Intro to Web security](https://web.dev/security-not-scary/)
+- [Top 10 Web application security risks](https://owasp.org/www-project-top-ten/)
+
+**#Authentication and OAuth**
+**Introduction**
+- *Authentication* is the process used by applications to determine and confirm identities of users. It ensures that the correct content is shown to users. More importantly, it ensures that incorrect content is secured and unavailable to unauthorized users. 
+
+Password authentication 
+- most common 
+- application's server checks the supplied credentials
+- upon a successful login, the application will respond with an authentication token (or auth token) for the client to use for additional HTTP requests. This token is then stored on the user’s computer, preventing the need for users to continuously log in. 
+
+API keys
+- Many apps expose interfaces to their information in the form of an API (application program interface)
+- When your application makes a request, API key is sent along with it. The API can then verify that your application is allowed access and provide the correct response based on the permission level of your application. 
+- The API can track what type and frequency of requests each application is making. This data can be used to [throttle requests](https://en.wikipedia.org/wiki/Throttling_process_(computing)) from a specific application to a pre-defined level of service. This prevents applications from spamming an endpoint or abusing user data.
+
+OAuth
+- OAuth is an **open standard** and is commonly used to grant permission for applications to access user information without forcing users to give away their passwords. 
+- An open standard is a publicly available definition of how some functionality should work. However, the standard does not actually build out that functionality. 
+
+Generic OAuth Flow
+- After selecting the service, the user will be redirected to the service to login. This login confirms the user’s identity and typically provides the user with a list of permissions the originating application is attempting to gain on the user’s account.
+- If the user confirms they want to allow this access, they will be redirected back to the original site, along with an access token. This access token is then saved by the originating application
+
+OAuth 2
+- OAuth 2 allows for different authentication flows depending on the specific application requesting access and the level of access being requested. 
+
+Below, we’ll discuss a few of the common OAuth 2 flows and how they are used.
+- Client Credentials Grant 
+  - This type of grant is used to access application-level data (similar to the developer API key above) and the end user does not participate in this flow. 
+  - Instead of an API key, a client ID and a client secret (strings provided to the application when it was authorized to use the API) are exchanged for an access token (and sometimes a refresh token).
+  - It is essential to ensure the client secret does not become public information, just like a password. 
+  - Developers should be careful not to accidentally commit this information to a public git repository.
+  - To ensure integrity of the secret key, it should not be exposed on the client-side and all requests containing it should be sent server-side.
+  - This access token is often short-lived, expiring frequently. Upon expiration, a new access token can be obtained by re-sending the client credentials or, preferably, a refresh token.
+  - Refresh tokens are an important feature of the OAuth 2 updates, encouraging access tokens to expire often and, as a result, be continuously changed
+- Authorization Code Grant
+  - This flow is one of the most common implementations of OAuth (e.g. Facebook, Google)
+  - It is similar to the OAuth flow described earlier with an added step linking the requesting application to the authentication.
+  - A user is redirected to the authenticating site, verifies the application requesting access and permissions, and is redirected back to the referring site with an *authorization code*.
+  - The requesting application then takes this code and submits it to the authenticating API, along with the application’s client ID and client secret to receive an access token and a refresh token.
+  - To avoid exposing the client ID and secret, this step of the flow should be done on the server side of the requesting application. 
+  - Since tokens are tied both to users and requesting applications, the API has a great deal of control over limiting access based on user behavior, application behavior, or both.
+- Implicit Grant
+  - The Implicit Grant OAuth flow was designed for applications which may need to access an OAuth API but don’t have the necessary server-side capabilities to keep this information secure.
+  - This flow prompts the user through similar authorization steps as the Authorization Code flow, but does not involve the exchange of the client secret. 
+  - The result of this interaction is an access token, and typically no refresh token. The access token is then used by the application to make additional requests to the service, but is not sent to the server side of the requesting application.
+  - This flow allows applications to use OAuth APIs without fear of potentially exposing long-term access to a user or application’s information.
+
+*OAuth provides powerful access to a diverse set of sites and information. By using it correctly, you can reduce sign-up friction and enrich user experience in your applications.*
+
+**#CORS**
+
+The web pages make frequent requests to load assets like images, fonts, and more, from many different places across the Internet. If these requests for assets go unchecked, the security of your browser may be at risk. 
+- For example, your browser may be subject to hijacking, or your browser might blindly download malicious code. 
+- Many modern browsers follow *security policies* to mitigate such risks.
+
+What is security policy?
+- Security policies on servers mitigate the risks associated with requesting assets hosted on different server.
+- *same-origin* security policy
+  - is very restrictive. Under this policy, a document (i.e., like a web page) hosted on server A can only interact with other documents that are also on server A.
+  -  the same-origin policy enforces that documents that interact with each other have the same origin.
+  -  An origin is made up of the following three parts: 
+     -  protocol
+     -  host 
+     -  port number
+  - not having a security policy can be risky, but a security policy like same-origin is a bit too restrictive.
+  - there are security policies that strike a mix of both, like cross-origin, which has evolved into the `cross-origin resource sharing standard (CORS)`
+
+What is CORS?
+- A request for a resource (like an image or a font) outside of the origin is known as a cross-origin request. CORS (cross-origin resource sharing) manages cross-origin requests.
+- Allowing cross-origin requests is helpful, as many websites today load resources from different places on the Internet (stylesheets, scripts, images, and more).
+- Cross-origin requests mean that servers must implement ways to handle requests from origins outside of their own. CORS allows servers to specify who (i.e., which origins) can access the assets on the server, among many other things.
+> You can think of these interactions as a building with a security entrance. For example, if you need to borrow a ladder, you could ask a neighbor in the building who has one. The building’s security would likely not have a problem with this request (i.e., same-origin). If you needed a particular tool, however, and you ordered it from an outside source like an online marketplace (i.e., cross-origin), the security at the entrance may request that the delivery person provide identification when your tool arrives.
+
+Why is CORS necessary?
+-  allows servers to specify not only who can access the assets, but also how they can be accessed. 
+- With CORS, a server can specify who can access its assets and which HTTP request methods are allowed from external resources.
+
+How does CORS manage requests from external resources?
+- The CORS standard manages cross-origin requests by adding new HTTP headers to the standard list of headers.
+- The following are the new HTTP headers added by the CORS standard:
+  - Access-Control-Allow-Origin
+  - Access-Control-Allow-Credentials
+  - Access-Control-Allow-Headers
+  - Access-Control-Allow-Methods
+  - Access-Control-Expose-Headers
+  - Access-Control-Max-Age
+  - Access-Control-Request-Headers
+  - Access-Control-Request-Method
+  - Origin
+- The Access-Control-Allow-Origin header allows servers to specify how their resources are shared with external domains. When a GET request is made to access a resource on Server A, Server A will respond with a value for the Access-Control-Allow-Origin header. Many times, this value will be *, meaning that Server A will share the requested resources with any domain on the Internet. Other times, the value of this header may be set to a particular domain (or list of domains), meaning that Server A will share its resources with that specific domain (or list of domains). The Access-Control-Allow-Origin header is critical to resource security.
+
+  - [CORS Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers#CORS)
+
+Pre-flight Requests
+- When a request is made using any of the following HTTP request methods, a standard preflight request will be made before the original request.
+  - PUT
+  - DELETE
+  - CONNECT
+  - OPTIONS
+  - TRACE
+  - PATCH
+- Preflight requests use the OPTIONS header. The preflight request is sent before the original request, hence the term “preflight.” The purpose of the preflight request is to determine whether or not the original request is safe (for example, a DELETE request). The server will respond to the preflight request and indicate whether or not the original request is safe. If the server specifies that the original request is safe, it will allow the original request. Otherwise, it will block the original request.
+- The request methods above aren’t the only thing that will trigger a preflight request. If any of the headers that are automatically set by your browser (i.e., user agent) are modified, that will also trigger a preflight request.
+
+How do I implement CORS?
+- Implementing the request headers to set up CORS correctly depends on the language and framework of the backend.
+
+- Node, you can use `setHeader()`, as shown below:
+  ```js
+  response.setHeader('Content-Type', 'text/html');
+  ```
+- Express, you can use CORS middleware
+  - `$ npm install cors`
+  ```js
+  var express = require('express');
+  var cors = require('cors');
+  var app = express();
+  
+  app.use(cors());
+  
+  app.get('/hello/:id', function (req, res, next) {
+    res.json({msg: 'Hello world, we are CORS-enabled!'});
+  });
+  
+  app.listen(80, function () {
+    console.log('CORS-enabled web server is listening on port 80');
+  });
+  ```
 
 ## 15. Web Apps
 

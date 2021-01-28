@@ -967,7 +967,7 @@ Hooks gives us the flexibility to organize our code in different ways, grouping 
 **#Conceptual**
 
 **Intro**
-- The list is comprised of a series of nodes as shown in the diagram. 
+- The list is comprised of a series of nodes 
 - The head node is the node at the beginning of the list. 
 - Each node contains data and a link (or pointer) to the next node in the list. 
 - The list is terminated when a node’s link is null. This is called the tail node.
@@ -989,8 +989,203 @@ Hooks gives us the flexibility to organize our code in different ways, grouping 
 - To properly maintain the list when removing a node from the middle of a linked list, you need to be sure to adjust the link on the previous node so that it points to the following node.
 - Depending on the language, nodes which are not referenced are removed automatically. “Removing” a node is equivalent to removing all references to the node.
 
-
 **#JS Code**
+
+Constructor and Adding to head
+
+```js
+const Node = require('./Node');
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+  }
+
+  addToHead(data) {
+    const newHead = new Node(data);
+    const currentHead = this.head;
+    this.head = newHead;
+
+    // check if there is a current head to the list, set the list’s head’s next node to currentHead
+    if (currentHead) {
+      this.head.setNextNode(currentHead);
+    }
+  }
+}
+
+module.exports = LinkedList;
+```
+
+Adding to tail
+
+```js
+addToTail(data) {
+  let tail = this.head;
+
+  // check if there's no head, add the node to the head of the list
+  if(!tail) {
+    this.head = new Node(data);
+  } else { // iterate through the list until we find the last node
+    while (tail.getNextNode()) {
+      tail = tail.getNextNode(data);
+    }
+    // add a pointer from the last node to new tail
+    tail.setNextNode(new Node(data));
+  }
+}
+```
+
+Removing the Head
+```js
+removeHead() {
+    const removedHead = this.head;
+
+    // check if there is a head
+    if (!removedHead) {
+      return 
+    } 
+    //  if there is a head, remove it by setting the list’s head = to the original head’s next node
+    if (removedHead.getNextNode() !== null) {
+      this.head = removedHead.getNextNode();
+    }
+    // return original head
+    return removedHead.data
+  }
+```
+
+Printing list
+```js
+printList() {
+    let currentNode = this.head;
+    // This string will holds the data from every node in the list, start at the list's head
+    let output = '<head> ';
+
+    // iterate through the list, adding to the string as we go
+    while (currentNode !== null) {
+      output += currentNode.data + ' ';
+      currentNode = currentNode.getNextNode();
+    }
+    output += '<tail>';
+    console.log(output);
+  }
+```
+
+Using the Linked list
+```js
+const LinkedList = require('./LinkedList');
+
+const seasons = new LinkedList();
+seasons.printList();
+
+seasons.addToHead('summer');
+seasons.addToHead('spring');
+seasons.printList();
+
+seasons.addToTail('fall');
+seasons.addToTail('winter');
+seasons.printList();
+
+seasons.removeHead();
+seasons.printList();
+
+```
+Additional Resources
+- [Video: Singly Linked Lists](https://youtu.be/njTh_OwMljA)
+- [Linked list interactive](https://visualgo.net/en/list?slide=3)
+- [GitHub Cheat Sheet: singly linked list](https://github.com/trekhleb/javascript-algorithms/tree/master/src/data-structures/linked-list)
+
+**#Swapping elements in a linked list**
+
+Given an input of a linked list, `data1`, and `data2`, the general steps for doing so is as follows:
+
+1. Iterate through the list looking for the node that matches `data1` to be swapped (`node1`), keeping track of the node’s previous node as you iterate (`node1Prev`)
+2. Repeat step 1 looking for the node that matches `data2` (giving you `node2` and `node2Prev`)
+3. If `node1Prev` is `null`, `node1` was the head of the list, so set the list’s head to `node2`
+4. Otherwise, set `node1Prev`‘s next node to `node2`
+5. If `node2Prev` is `null`, set the list’s head to `node1`
+6. Otherwise, set `node2Prev`‘s next node to `node1`
+7. Set `node1`‘s next node to `node2`‘s next node
+8. Set `node2`‘s next node to `node1`‘s next node
+
+```js
+const LinkedList = require('./LinkedList.js')
+
+const testList = new LinkedList();
+for (let i = 0; i <= 10; i++) {
+  testList.addToTail(i);
+}
+
+testList.printList();
+swapNodes(testList, 2, 5);
+testList.printList();
+
+function swapNodes(list, data1, data2) {
+  console.log(`Swapping ${data1} and ${data2}:`);
+  
+  let node1Prev = null;
+  let node2Prev = null;
+  let node1 = list.head;
+  let node2 = list.head;
+
+  if (data1 === data2) {
+    console.log('Elements are the same - no swap to be made');
+    return;
+  }
+  
+  while (node1 !== null) {
+    if (node1.data === data1) { 
+      break;
+    }
+    node1Prev = node1;
+    node1 = node1.getNextNode();
+  }
+  
+  while (node2 !== null) {
+    if (node2.data === data2) {
+      break;
+    }
+    node2Prev = node2;
+    node2 = node2.getNextNode();
+  }
+  
+  if (node1 === null || node2 === null) {
+    console.log('Swap not possible - one or more element is not in the list');
+    return;
+  }
+
+  if (node1Prev === null) {
+    list.head = node2;
+  } else {
+    node1Prev.setNextNode(node2);
+  }
+
+  if (node2Prev === null) { 
+    list.head = node1;
+  } else {
+node2Prev.setNextNode(node1);
+  }
+  
+  let temp = node1.getNextNode();
+  node1.setNextNode(node2.getNextNode());
+  node2.setNextNode(temp); 
+}
+```
+
+Time and Space Complexity
+
+- The worst case for time complexity in `swapNodes()` is if both while loops must iterate all the way through to the end (either if there are no matching nodes, or if the matching node is the tail). This means that it has a linear big O runtime of `O(n)`, since each `while` loop has a `O(n)` runtime, and constants are dropped.
+- There are four new variables created in the function regardless of the input, which means that it has a constant space complexity of `O(1)`.
+
+**#Two-Pointer Linked List Techniques**
+
+
+**#Practice: Singly Linked Lists**
+
+- [Easy - Remove Linked List Elements](https://leetcode.com/problems/remove-linked-list-elements/)
+- [Easy - Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)
+- [Easy - Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/)
+- [Medium - Remove Duplicates From Sorted List](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/)
+- [More Practice Problems](https://leetcode.com/problemset/all/?search=singly%20linked%20list)
 
 ### d. Doubly Linked Lists
 ### e. Queues
@@ -1026,6 +1221,11 @@ Hooks gives us the flexibility to organize our code in different ways, grouping 
 - [Facebook - How Many Ways to Decode a Message](https://youtu.be/qli-JCrSwuk)
 - [Amazon - Recursive Staircase Problem](https://youtu.be/5o-kdjv7FD0)
 - [Google - Universal Value Tree](https://youtu.be/7HgsS8bRvjo)
+
+
+Additional Resources: 
+- dailycodinproblem.com
+- leetcode.com
 
 
 ## 27. Final Front-end Portfolio Project

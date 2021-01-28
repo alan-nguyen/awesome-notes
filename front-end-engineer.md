@@ -934,15 +934,64 @@ Hooks gives us the flexibility to organize our code in different ways, grouping 
 
 ## 21. Advanced Web Development 
 ### a. Styling Applications
+- [Why CSS-in-JS](https://css-tricks.com/the-differing-perspectives-on-css-in-js/)
+- [Getting started with styled components](https://www.robinwieruch.de/react-styled-components)
+- [The different ways to style react components](https://www.robinwieruch.de/react-css-styling)
 ### b. SEO
-### c. Build Tools
-### d. Optimizing Application
-### e. Adding Realtime Connectivity
+- [A Smashing Guide To The World Of Search Engine Optimization](https://www.smashingmagazine.com/smashing-guide-search-engine-optimization/)
+- [SEO Checklist](https://web.dev/lighthouse-seo/)
 
+### c. Build Tools
+- [What build tools can do for you](https://www.netlify.com/blog/2017/11/15/what-build-tools-can-do-for-you/)
+- [Comparison of build tools](https://survivejs.com/webpack/appendices/comparison/)
+- [Webpack Boilerplate](https://github.com/taniarascia/webpack-boilerplate)
+- [The many jobs of JS build tools](https://www.swyx.io/writing/jobs-of-js-build-tools/)
+- [How to keep your JS libraries up to date](https://blog.logrocket.com/how-to-keep-javascript-libraries-up-to-date/)
+
+### d. Optimizing Application
+- [Optimizing your react app](https://reactjs.org/docs/optimizing-performance.html)
+- [Fast load times](https://web.dev/fast/)
+- [Using lighthouse](https://developers.google.com/web/tools/lighthouse)
+
+### e. Adding Realtime Connectivity
+- [Web sockets with Socket.io, React, and Node](https://www.valentinog.com/blog/socket-react/)
+- 
 ## 22. Linear Data Structures
 ### a. Intro to Data Structures
+**#Why Data Structure?**
+
+**#Data Structure API**
+
 ### b. Nodes
 ### c. Singly Linked Lists
+**#Conceptual**
+
+**Intro**
+- The list is comprised of a series of nodes as shown in the diagram. 
+- The head node is the node at the beginning of the list. 
+- Each node contains data and a link (or pointer) to the next node in the list. 
+- The list is terminated when a node’s link is null. This is called the tail node.
+- Since the nodes use links to denote the next node in the sequence, the nodes are not required to be sequentially located in memory.
+- allow for quick insertion and removal of nodes
+- Can be unidirectional or bidirectional
+- Common operations on a linked list may include:
+  - adding nodes
+  - removing nodes
+  - finding a node
+  - traversing (or travelling through) the linked list
+
+**Adding a new node**
+- Adding a new node to the beginning of the list requires you to link your new node to the current head node. 
+- This way, you maintain your connection with the following nodes in the list.
+
+**Removing a node**
+- If you accidentally remove the single link to a node, that node’s data and any following nodes could be lost to your application, leaving you with orphaned nodes.
+- To properly maintain the list when removing a node from the middle of a linked list, you need to be sure to adjust the link on the previous node so that it points to the following node.
+- Depending on the language, nodes which are not referenced are removed automatically. “Removing” a node is equivalent to removing all references to the node.
+
+
+**#JS Code**
+
 ### d. Doubly Linked Lists
 ### e. Queues
 ### f. Stacks
@@ -968,7 +1017,16 @@ Hooks gives us the flexibility to organize our code in different ways, grouping 
 ### a. Whiteboarding
 ### b. JS algorithms Practice
 ### c. Soft skills
+- [Behavioral interviews: how to prepare for anc ace interview questions](https://www.educative.io/blog/behavioral-interviews-how-to-prepare-and-ace-interview-questions)
+- [How to succeed in a behavioral interview](https://blog.pramp.com/how-to-succeed-in-a-behavioral-interview-796af6233dd1)
+- Cracking the coding interview chap 5
 ### d. Real World Interview Problems
+
+- [Google - First Recurring Character](https://youtu.be/GJdiM-muYqc)
+- [Facebook - How Many Ways to Decode a Message](https://youtu.be/qli-JCrSwuk)
+- [Amazon - Recursive Staircase Problem](https://youtu.be/5o-kdjv7FD0)
+- [Google - Universal Value Tree](https://youtu.be/7HgsS8bRvjo)
+
 
 ## 27. Final Front-end Portfolio Project
 ### Overview

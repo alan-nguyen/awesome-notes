@@ -928,7 +928,35 @@ Hooks gives us the flexibility to organize our code in different ways, grouping 
 
 ## 19. Advanced Concepts in TDD
 ### a. Advanced Testing: Mocking
+- [What is Test Coverage](https://www.softwaretestinghelp.com/test-coverage/)
+- [Mocking, stubbing, and Contract Testing](https://circleci.com/blog/how-to-test-software-part-i-mocking-stubbing-and-contract-testing/)
+- [Jest mock functions](https://jestjs.io/docs/en/mock-functions)
+- [Writing tests for react apps using Jest and Enzyme](https://css-tricks.com/writing-tests-for-react-applications-using-jest-and-enzyme/)
+
+Running packages
+- Using Yarn:
+    `yarn create-react-app my-app`
+- Using npm:
+    `npm create-react-app my-app`
+
+Adding dependencies
+
+- Using Yarn:
+  `yarn add enzyme enzyme-adapter-react-16 --dev`
+- Using npm:
+    `npm install enzyme enzyme-adapter-react-16 --save-dev`
+
+Running package.json scripts
+- Using Yarn:
+    `yarn run test`
+- Using npm:
+    `npm run test`
+
 ### b. Advanced Testing: Browser Automation
+- [Selenium](https://www.selenium.dev/documentation)
+- [Automating functional testing using Selenium](https://www.tatvasoft.com/blog/automating-functional-testing-using-selenium/)
+- [Setting up your own test automation environment](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Your_own_automation_environment)
+
 
 ## 20. React & Redux Porfolio Project
 
@@ -1188,8 +1216,284 @@ Time and Space Complexity
 - [More Practice Problems](https://leetcode.com/problemset/all/?search=singly%20linked%20list)
 
 ### d. Doubly Linked Lists
+
+**#Conceptual**
+
+Intro
+
+- Like a singly linked list, a doubly linked list is comprised of a series of nodes. 
+- Each node contains data and two links (or pointers) to the next and previous nodes in the list. 
+- Common operations on a doubly linked list may include:
+
+  - adding nodes to both ends of the list
+  - removing nodes from both ends of the list
+  - finding, and removing, a node from anywhere in the list
+  - traversing (or traveling through) the list
+
+Adding to the Head
+
+- When adding to the head of the doubly linked list, we first need to check if there is a current head to the list. If there isn’t, then the list is empty, and we can simply make our new node both the head and tail of the list and set both pointers to null. If the list is not empty, then we will:
+
+  1. Set the current head’s previous pointer to our new head
+  2. Set the new head’s next pointer to the current head
+  3. Set the new head’s previous pointer to `null`
+
+Adding to the Tail
+
+- Similarly, there are two cases when adding a node to the tail of a doubly linked list. If the list is empty, then we make the new node the head and tail of the list and set the pointers to `null`. If the list is not empty, then we:
+
+  1. Set the current tail’s next pointer to the new tail
+  2. Set the new tail’s previous pointer to the current tail
+  3. Set the new tail’s next pointer to `null`
+
+Removing the Head
+
+- Removing the head involves updating the pointer at the beginning of the list. We will set the previous pointer of the new head (the element directly after the current head) to null, and update the head property of the list. If the head was also the tail, the tail removal process will occur as well.
+
+Removing the Tail
+
+- Similarly, removing the tail involves updating the pointer at the end of the list. We will set the next pointer of the new tail (the element directly before the tail) to null, and update the tail property of the list. If the tail was also the head, the head removal process will occur as well.
+
+Removing from the Middle of the List
+
+- It is also possible to remove a node from the middle of the list. Since that node is neither the head nor the tail of the list, there are two pointers that must be updated:
+
+  - We must set the removed node’s preceding node’s next pointer to its following node
+  - We must set the removed node’s following node’s previous pointer to its preceding node
+
+- There is no need to change the pointers of the removed node, as updating the pointers of its neighboring nodes will remove it from the list. If no nodes in the list are pointing to it, the node is orphaned.
+
+![alt Removing from the middle of a list](images/doubly-linked-list-remove-middle.png)
+
+
+**#JavaScript implementing**
+
+Node
+```js
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.next = null;
+    this.previous = null;
+  }
+
+  setNextNode(node) {
+    if (node instanceof Node || node === null) {
+      this.next = node;
+    } else {
+      throw new Error('Next node must be a member of the Node class')
+    }
+  }
+
+  setPreviousNode(node) {
+    if (node instanceof Node || node === null) {
+      this.previous = node;
+    } else {
+      throw new Error('Previous node must be a member of the Node class')
+    }
+  }
+
+  getNextNode() {
+    return this.next;
+  }
+
+  getPreviousNode() {
+    return this.previous;
+  }
+}
+
+module.exports = Node;
+```
+Doubly linked lists
+```js
+const Node = require('./Node');
+
+class DoublyLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+  }
+  
+  // Add to head
+  addToHead(data) {
+    const newHead = new Node(data);
+    const currentHead = this.head;
+
+    // check if there is a head, update previous and next node of the current head
+    if (currentHead) {
+      currentHead.setPreviousNode(newHead);
+      newHead.setNextNode(currentHead);
+    }
+
+    // set the list's head to the new head
+    this.head = newHead;
+
+    // if the list has no tail, set its tail to the new head
+    if (!this.tail) {
+      this.tail = newHead;
+    }
+  }
+
+  // Add to tail
+  addToTail(data) {
+    const newTail = new Node(data);
+    const currentTail = this.tail;
+    if (currentTail) {
+      currentTail.setNextNode(newTail);
+      newTail.setPreviousNode(currentTail);
+    }
+    this.tail = newTail;
+    if (!this.head) {
+      this.head = newTail;
+    }
+  }
+
+  // remove head
+  removeHead() {
+    const removedHead = this.head;
+
+    // if there is no head, nothing to remove
+    if (!removedHead) {
+      return 
+    }
+    // set the list's head to the next node of the removed head node
+    this.head = removedHead.getNextNode();
+
+    // if the head has value, set the head's previous node to null
+    if (this.head) {
+      this.head.setPreviousNode(null);
+    }
+    // if the removed head was also the tail of the list
+    if (removedHead === this.tail) {
+      this.removeTail();
+    }
+    // return the old head
+    return removedHead.data;
+  }
+  
+  // remove tail
+  removeTail() {
+    const removedTail = this.tail;
+
+    if (!removedTail) {
+      return;
+    }
+    this.tail = removedTail.getPreviousNode();
+    if (this.tail) {
+      this.tail.setNextNode(null);
+    }
+    if (removedTail === this.head) {
+      this.removeHead();
+    }
+    return removedTail.data;
+  }
+
+  // Remove node by data
+  removeByData(data) {
+    let nodeToRemove;
+    let currentNode = this.head;
+    while (currentNode) {
+      // check if current node's data matches data
+      if (currentNode.data === data) {
+        nodeToRemove = currentNode;
+        break;
+      } 
+      currentNode = currentNode.getNextNode();
+    }
+    // if there was no matching node in the list
+    if (!nodeToRemove) {
+      return null
+    }
+
+    // Resetting pointers around the node
+    if (nodeToRemove === this.head) {
+      this.removeHead();
+    } else if (nodeToRemove === this.tail) {
+      this.removeTail();
+    } else { // not head or tail
+      const nextNode = nodeToRemove.getNextNode();
+      const previousNode = nodeToRemove.getPreviousNode();
+
+      /* remove the pointers to and from 
+      nodeToRemove and have nextNode and 
+      previousNode point to each other
+      */
+      nextNode.setPreviousNode(previousNode);
+      previousNode.setNextNode(nextNode);
+    }
+
+    return nodeToRemove
+  }
+
+
+  printList() {
+    let currentNode = this.head;
+    let output = '<head> ';
+    while (currentNode !== null) {
+      output += currentNode.data + ' ';
+      currentNode = currentNode.getNextNode();
+    }
+    output += '<tail>';
+    console.log(output);
+  }
+}
+
+module.exports = DoublyLinkedList;
+```
+Using Doubly linked List
+```js
+const DoublyLinkedList = require('./DoublyLinkedList.js');
+
+const subway = new DoublyLinkedList();
+
+subway.addToHead('TimesSquare');
+subway.addToHead('GrandCentral');
+subway.addToHead('CentralPark');
+subway.printList();
+
+subway.addToTail('PennStation');
+subway.addToTail('WallStreet');
+subway.addToTail('BrooklynBridge');
+subway.printList();
+
+subway.removeHead();
+subway.removeTail();
+subway.printList();
+
+subway.removeByData('TimesSquare');
+subway.printList();
+
+```
+
+**#Additional resources**
+- [Video: Doubly linked lists](https://youtu.be/ChWWEncl76Y)
+- [Interactive: Doubly linked lists](https://visualgo.net/en/list?slide=6)
+- [Github Cheat sheet: Doubly linked lists](https://github.com/trekhleb/javascript-algorithms/tree/master/src/data-structures/doubly-linked-list)
+- Practice : Doubly linked lists
+  - https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+  - https://leetcode.com/problems/reverse-linked-list-ii/
+  - https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/
+  - https://leetcode.com/problemset/all/?search=linked%20list
+
+
 ### e. Queues
+**#Conceptual**
+
+**#JavaScript implementing**
+
+**#Additional resources**
+- Video: Stacks & Queues
+- Interactive: Queues
+- Github Cheat sheet: Queues
+
 ### f. Stacks
+**#Conceptual**
+
+**#JavaScript implementing**
+
+**#Additional resources**
+- Interactive: Stacks
+- Github Cheat sheet: Stacks
 
 ## 23. Complex Data Structures
 ### a. Hash Maps

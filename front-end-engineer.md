@@ -664,6 +664,10 @@ How do I implement CORS?
   });
   ```
 
+Additional resources:
+- Documentation: [Ajax](https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX)
+- Video: [What the Heck is the Event Loop Anyways](https://www.youtube.com/watch?v=8aGhZQkoFbQ&feature=emb_title)
+
 ## 15. Web Apps
 
 ## 16. React - Part 1
@@ -683,6 +687,236 @@ How do I implement CORS?
 ### f. Jammming
 ### g. Deploying React Apps with Netlify
 ### h. Function Components and Hooks
+**#Components**
+
+**#The State Hook**
+
+**Array in States**
+- JavaScript arrays are the best data model for managing and rendering JSX lists.
+  - `options` is an array that contains the names of all of the pizza toppings available
+  - `selected` is an array representing the selected toppings for our personal pizza
+ - The `options` array contains *static data*, meaning that it does not change. We like to define static data models outside of our function components 
+  - The `selected` array contains *dynamic data*, meaning that it changes, usually based on a user’s actions. We initialize `selected` as an empty array. When a button is clicked, the `toggleTopping` event handler is called.
+
+```jsx
+import React, { useState } from "react";
+ 
+const options = ["Bell Pepper", "Sausage", "Pepperoni", "Pineapple"];
+ 
+export default function PersonalPizza() {
+  const [selected, setSelected] = useState([]);
+ 
+  const toggleTopping = ({target}) => {
+    const clickedTopping = target.value;
+    setSelected((prev) => {
+     // check if clicked topping is already selected
+      if (prev.includes(clickedTopping)) {
+        // filter the clicked topping out of state
+        return prev.filter(t => t !== clickedTopping);
+      } else {
+        // add the clicked topping to our state
+        return [clickedTopping, ...prev];
+      }
+    });
+  };
+ 
+  return (
+    <div>
+      {options.map(option => (
+        <button value={option} onClick={toggleTopping} key={option}>
+          {selected.includes(option) ? "Remove " : "Add "}
+          {option}
+        </button>
+      ))}
+      <p>Order a {selected.join(", ")} pizza</p>
+    </div>
+  );
+}
+```
+
+**Objects in State**
+- When we work with a set of related variables, it can be very helpful to group them in an object.
+```jsx
+export default function Login() {
+  const [formState, setFormState] = useState({});
+ 
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setFormState((prev) => ({
+      ...prev,
+      [name]: value // [name] is computed property 
+    }));
+  };
+ 
+  return (
+    <form>
+      <input
+        value={formState.firstName}
+        onChange={handleChange}
+        name="firstName"
+        type="text"
+      />
+      <input
+        value={formState.password}
+        onChange={handleChange}
+        type="password"
+        name="password"
+      />
+    </form>
+  );
+}
+```
+A few things to notice:
+- We use a state setter callback function to update state based on the previous value
+- The spread syntax is the same for objects as for arrays: `{ ...oldObject, newKey: newValue }`
+- We reuse our event handler across multiple inputs by using the input tag’s `name` attribute to identify which input the change event came from
+
+**Seperate Hooks for Separate States**
+- Managing dynamic data with separate state variables has many advantages, like making our code more simple to write, read, test, and reuse across components. 
+
+```jsx
+function Subject() {
+  const [currentGrade, setGrade] = useState('B');
+  const [classmates, setClassmates] = useState(['Hasan', 'Sam', 'Emma']);
+  const [classDetails, setClassDetails] = useState({topic: 'Math', teacher: 'Ms. Barry', room: 201});
+  const [exams, setExams] = useState([{unit: 1, score: 91}, {unit: 2, score: 88}]);
+  // ...
+}
+```
+
+**#The Effect Hook**
+
+Why use `useEffect`?
+
+A few reasons why we may want to run some code after each render:
+- fetch data from a backend service
+- subscribe to a stream of data
+- manage timers and intervals
+- read from and make changes to the DOM
+
+`useEffect()` is a function that we’ll use to execute some code after the first render, after each re-render, and after the last render of a function component.
+
+**Clean up Effects**
+
+```jsx
+useEffect(()=>{
+  document.addEventListener('keydown', handleKeyPress);
+  return () => {
+    document.removeEventListener('keydown', handleKeyPress);
+  };
+})
+```
+
+**Control when effects are called**
+
+- If we want to only call our effect after the first render, we pass an empty array `[]` to `useEffect()` as the second argument.
+
+```jsx
+useEffect(() => {
+  alert("component rendered for the first time");
+  return () => {
+    alert("component is being removed from the DOM");
+  };
+}, []); 
+```
+
+**Fetch Data**
+- An empty dependency array signals to the Effect Hook that our effect never needs to be re-run, that it doesn’t depend on anything. Specifying zero dependencies means that the result of running that effect won’t change and calling our effect once is enough. 
+- A dependency array that is not empty signals to the Effect Hook that it can skip calling our effect after re-renders unless the value of one of the variables in our dependency array has changed. If the value of a dependency has changed, then the Effect Hook will call our effect again!
+
+```jsx
+useEffect(() => {
+  document.title = `You clicked ${count} times`;
+}, [count]); // Only re-run the effect if the value stored by count changes
+``` 
+
+**Rules of Hooks**
+
+There are two main rules to keep in mind when using Hooks:
+- only call Hooks at the top level
+- only call Hooks from React functions
+
+React keeps track of the data and functions that we are managing with Hooks based on their order in the function component’s definition. For this reason, we always call our Hooks at the top level; we never call hooks inside of loops, conditions, or nested functions. 
+
+Instead of confusing React with code like this:
+
+```jsx
+if (userName !== '') {
+  useEffect(() => {
+    localStorage.setItem('savedUserName', userName);
+  });
+}
+```
+
+We can accomplish the same goal, while consistently calling our Hook every time:
+
+```jsx
+useEffect(() => {
+  if (userName !== '') {
+    localStorage.setItem('savedUserName', userName);
+  }
+});
+```
+
+**Separate Hooks for Separate Effects**
+- It's a good idea to separate concerns by managing different data with different Hooks. 
+
+Compare the complexity here, where data is bundled up into a single object:
+
+```jsx
+const [data, setData] = useState({ position: { x: 0, y: 0 } });
+useEffect(() => {
+  get('/menu').then((response) => {
+    setData((prev) => ({ ...prev, menuItems: response.data }));
+  });
+  const handleMove = (event) =>
+    setData((prev) => ({
+      ...prev,
+      position: { x: event.clientX, y: event.clientY }
+    }));
+  window.addEventListener('mousemove', handleMove);
+  return () => window.removeEventListener('mousemove', handleMove);
+}, []);
+```
+
+To the simplicity here, where we have separated concerns:
+
+```jsx
+const [menuItems, setMenuItems] = useState(null);
+useEffect(() => {
+  get('/menu').then((response) => setMenuItems(response.data));
+}, []);
+ 
+const [position, setPosition] = useState({ x: 0, y: 0 });
+useEffect(() => {
+  const handleMove = (event) =>
+    setPosition({ x: event.clientX, y: event.clientY });
+  window.addEventListener('mousemove', handleMove);
+  return () => window.removeEventListener('mousemove', handleMove);
+}, []);
+```
+
+**#Review**
+
+In this lesson, we learned how to write effects that manage timers, manipulate the DOM, and fetch data from a server. In earlier versions of React, we could only have executed this type of code in the lifecycle methods of class components, but we can now perform these types of actions in function components as well!
+
+Let’s review the main concepts from this lesson:
+
+- `useEffect()` - we can import this function from the ‘react’ library and call it in our function components
+- effect - refers to a function that we pass as the first argument of the useEffect() function. By default, the Effect Hook calls this effect after each render
+- cleanup function - the function that is optionally returned by the effect. If the effect does anything that needs to be cleaned up to prevent memory leaks, then the effect returns a cleanup function, then the Effect Hook will call this cleanup function before calling the effect again as well as when the component is being unmounted
+- dependency array - this is the optional second argument that the useEffect() function can be called with in order to prevent repeatedly calling the effect when this is not needed. This array should consist of all variables that the effect depends on.
+
+The Effect Hook is all about scheduling when our effect’s code gets executed. We can use the dependency array to configure when our effect is called in the following ways:
+
+ Dependency Array |	Effect called after first render & … |
+ --- | --- |
+undefined | 	every re-render
+Empty array |	no re-renders
+Non-empty array |	when any value in the dependency array changes
+
+Hooks gives us the flexibility to organize our code in different ways, grouping related data as well as separating concerns to keep code simple, error-free, reusable, and testable!
+
 ### i. Advanced React
 ### j. React Testing with Jest
 
